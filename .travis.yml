@@ -7,7 +7,7 @@ env:
   
 before_install:
   - chmod +x ./build/compileTasks.sh
-  - chmod +x .api.sh
+  - chmod +x .api
 
 install: true
   
