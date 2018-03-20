@@ -11,12 +11,12 @@ errors=0
 TOKEN1=8c073f6335e29d1
 TOKEN2=e06e0dbade3a8a78405449b5d
 sleep 2
-#username=$(curl -H "Authorization: token $TOKEN1$TOKEN2" -X GET "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/pulls/${TRAVIS_PULL_REQUEST}" | jq -r '.user.login')
-username="LuisFernando100"
+username=$(curl -H "Authorization: token $TOKEN1$TOKEN2" -X GET "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/pulls/${TRAVIS_PULL_REQUEST}" | jq -r '.user.login')
+#username="LuisFernando100"
 sleep 2
-#number=$(curl -H "Authorization: token $TOKEN1$TOKEN2" -X GET "https://raw.githubusercontent.com/LinkedDataTest1/Assignment1/master/username+matricula.csv" | awk -v username=$username -F "\"*,\"*" '{ if($1 == username) print $2}')
-#number=$(echo $number)
-number=123
+number=$(curl -H "Authorization: token $TOKEN1$TOKEN2" -X GET "https://raw.githubusercontent.com/LinkedDataTest1/Assignment1/master/username+matricula.csv" | awk -v username=$username -F "\"*,\"*" '{ if($1 == username) print $2}')
+number=$(echo $number)
+#number=123
 
 #Check if correct directory exists
 if [ ! -d "$username-$number" ]; then
