@@ -9,7 +9,7 @@ before_install:
 install: true
   
 script:
-  - TASKS=(Task6 Task7)
+  - TASKS=(Task06 Task07)
   - touch err
   - ./build/compileTasks.sh ${TASKS[@]} > err
   
