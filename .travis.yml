@@ -1,9 +1,6 @@
 language: java
 jdk:
   - oraclejdk8
-
-env:
-  - TASKS=(Task6 Task7)
   
 before_install:
   - chmod +x ./build/compileTasks.sh
@@ -12,9 +9,9 @@ before_install:
 install: true
   
 script:
+  - TASKS=(Task6 Task7)
   - touch err
   - ./build/compileTasks.sh ${TASKS[@]} > err
-  - cat err
   
 after_success:
   - ./.api true
