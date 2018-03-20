@@ -25,6 +25,7 @@ if [ ! -d "$username-$number" ]; then
 else
 	for task in "$@"
 	do
+		echo $task
 		#For each Task check if the Task.java exist
 		if [ -f "./$username-$number/"$task".java" ]
 		then
