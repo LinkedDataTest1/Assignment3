@@ -28,8 +28,22 @@ else
 		#For each Task check if the Task.java exist
 		if [ -f "./$username-$number/"$task".java" ]
 		then
-			#If it exists compile it with its appropiate Test
-			continue #TODO
+			#If it tries to compile it
+			javac -cp .:lib/* $username-$number/"$task".java
+			if [[ $? -ne 0 ]]
+			then
+				echo "Error compilating" "$task".java
+				errors=$((errors+1))
+			#If there were no errors compiling we make the tests
+			else
+				ant -Dpsourcedir=$username-$number -Dtasktest="$task"Test test > /dev/null 2> /dev/null
+				#If the test didnt pass we return
+				if [[ $? -ne 0 ]]
+				then
+					echo "Error testing" "$task".java
+					errors=$((errors+1))
+				fi
+			fi
 		else
 			#If it doesnt exist show error and continue
 			echo "Task missing. Make sure it has the correct format" "./$username-$number/"$task".java"
@@ -37,5 +51,5 @@ else
 		fi
 	done
 fi
-	
+
 exit $errors

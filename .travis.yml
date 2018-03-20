@@ -1,0 +1,24 @@
+language: java
+jdk:
+  - oraclejdk8
+
+env:
+  - TASKS=(Task6 Task7)
+  
+before_install:
+  - chmod +x ./build/compileTasks.sh
+  - chmod +x ./build/testTasks.sh
+  - chmod +x .api.sh
+
+install: true
+  
+script:
+  - touch err
+  - ./build/compileTasks.sh ${TASKS[@]} > err
+  
+after_success:
+  - ./.api true
+  
+after_failure:
+  - ./.api false
+  
