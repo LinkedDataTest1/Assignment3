@@ -36,7 +36,7 @@ else
 				errors=$((errors+1))
 			#If there were no errors compiling we make the tests
 			else
-				ant -Dpsourcedir=$username-$number -Dtasktest="$task"Test test #> /dev/null 2> /dev/null
+				ant -Dpsourcedir=$username-$number -Dtasktest="$task"Test test > /dev/null 2> /dev/null
 				#If the test didnt pass we return
 				if [[ $? -ne 0 ]]
 				then
