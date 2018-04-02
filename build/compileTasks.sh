@@ -9,12 +9,12 @@
 errors=0
 
 sleep 2
-#username=$(curl -s -X GET "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/pulls/${TRAVIS_PULL_REQUEST}" | jq -r '.user.login')
-username="LuisFernando100"
+username=$(curl -s -X GET "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/pulls/${TRAVIS_PULL_REQUEST}" | jq -r '.user.login')
+#username="LuisFernando100"
 sleep 2
-#number=$(curl -s -X GET "https://raw.githubusercontent.com/LinkedDataTest1/Assignment1/master/$username.csv" | awk -v username=$username -F "\"*,\"*" '{ if($1 == username) print $2}')
-#number=$(echo $number)
-number=123
+number=$(curl -s -X GET "https://raw.githubusercontent.com/LinkedDataTest1/Assignment1/master/$username.csv" | awk -v username=$username -F "\"*,\"*" '{ if($1 == username) print $2}')
+number=$(echo $number)
+#number=123
 
 #Check if correct directory exists
 if [ ! -d "$username-$number" ]; then
