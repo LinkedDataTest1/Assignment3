@@ -10,5 +10,5 @@ before_script:
   
 script:
   - TASKS=(Task06 Task07)
-  - ./build/compileTasks.sh ${TASKS[@]}
+  - ./build/compileTasks.sh
   
