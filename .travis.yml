@@ -4,10 +4,6 @@ jdk:
   
 notifications:
   webhooks: https://travis-buddy-service.herokuapp.com
-  
-before_install:
- - chmod +x ./build/prepareTasks.sh
- - ./build/prepareTasks.sh
  
 before_script:
   - chmod +x ./build/compileTasks.sh
