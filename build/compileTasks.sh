@@ -9,45 +9,37 @@
 errors=0
 
 sleep 2
-username=$(curl -s -X GET "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/pulls/${TRAVIS_PULL_REQUEST}" | jq -r '.user.login')
-#username="LuisFernando100"
+#username=$(curl -s -X GET "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/pulls/${TRAVIS_PULL_REQUEST}" | jq -r '.user.login')
+username="LuisFernando100"
 sleep 2
-number=$(curl -s -X GET "https://raw.githubusercontent.com/LinkedDataTest1/Assignment1/master/username+matricula.csv" | awk -v username=$username -F "\"*,\"*" '{ if($1 == username) print $2}')
-number=$(echo $number)
-#number=123
+#number=$(curl -s -X GET "https://raw.githubusercontent.com/LinkedDataTest1/Assignment1/master/$username.csv" | awk -v username=$username -F "\"*,\"*" '{ if($1 == username) print $2}')
+#number=$(echo $number)
+number=123
 
 #Check if correct directory exists
 if [ ! -d "$username-$number" ]; then
-  echo "Directory missing. Make sure it has the correct format" "$username-$number" "If the format is correct make sure your data here is correct https://github.com/LinkedDataTest1/Assignment1/blob/master/username+matricula.csv"
+  echo "Directory missing. Make sure it has the correct format" "$username-$number" "If the format is correct make sure your data here is correct https://github.com/LinkedDataTest1/Assignment1/blob/master/$username.csv"
   errors=$((errors+1))
 else
-	for task in "$@"
-	do
-		#For each Task check if the Task.java exist
-		if [ -f "./$username-$number/"$task".java" ]
+	#Copy all files to src foulder
+	cp -R $username-$number/. ./src/main/java/
+	#Compile java files
+	mvn -q compile
+	if [[ $? -eq 0 ]]
+	then
+		#If compilation was correct run tests
+		mvn -q test
+		if [[ $? -ne 0 ]]
 		then
-			#If it tries to compile it
-			javac -cp .:lib/* $username-$number/"$task".java
-			if [[ $? -ne 0 ]]
-			then
-				echo "Error compilating" "$task".java
-				errors=$((errors+1))
-			#If there were no errors compiling we make the tests
-			else
-				ant -Dpsourcedir=$username-$number -Dtasktest="$task"Test test > /dev/null 2> /dev/null
-				#If the test didnt pass we return
-				if [[ $? -ne 0 ]]
-				then
-					echo "Error testing" "$task".java
-					errors=$((errors+1))
-				fi
-			fi
-		else
-			#If it doesnt exist show error and continue
-			echo "Task missing. Make sure it has the correct format" "./$username-$number/"$task".java"
+			#If tests failed show error
+			echo "ERROR ON TEST"
 			errors=$((errors+1))
 		fi
-	done
+	else
+		#If compilation was incorrect return Error
+		echo "ERROR ON COMPILATION"
+		errors=$((errors+1))
+	fi
 fi
 
 exit $errors
