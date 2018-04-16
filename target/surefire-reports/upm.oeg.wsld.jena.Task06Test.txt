@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: upm.oeg.wsld.jena.Task06Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.987 sec - in upm.oeg.wsld.jena.Task06Test

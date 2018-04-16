@@ -23,7 +23,7 @@ if [ ! -d "$username-$number" ]; then
   errors=$((errors+1))
 else
 	#Copy all files to src foulder
-	cp -R $username-$number/. ./src/main/java/
+	cp -R $username-$number/. ./src/main/java/upm/oeg/wsld/jena/
 	#Compile java files
 	mvn -q compile
 	if [[ $? -eq 0 ]]
